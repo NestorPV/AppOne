@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppOne.MainPage"
+             xmlns:models ="clr-namespace:MauiAppOne.Models"
+             x:DataType="models:MainPageModel"
+             BackgroundColor="LightGreen">
+
+    <Grid Padding="10" RowSpacing="10" RowDefinitions="300, *">
+        <Image Grid.Row="0" Source="centered.png" Aspect="AspectFill" />
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Monkeys}" MaximumHeightRequest="300">
+            <CollectionView.Header>
+                <Grid Padding="20" RowDefinitions="Auto, Auto">
+                    <VerticalStackLayout Grid.Row="0">
+                        <Label Text="This should be centered!" HorizontalTextAlignment="Center" BackgroundColor="#55FFFF00" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1">
+                        <Label Text="It doesn't work on iOS" HorizontalTextAlignment="Center" BackgroundColor="#5500FFFF" />
+                    </VerticalStackLayout>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Monkey">
+                    <Grid Padding="10" RowSpacing="5">
+                        <Frame BackgroundColor="#55FF55FF">
+                            <Label Grid.Column="1"
+                                   Text="{Binding Name}"
+                                   HorizontalTextAlignment="Center"
+                                   FontAttributes="Bold" />
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ScrollView Grid.Row="1" Padding="10">
+            <VerticalStackLayout Spacing="10">
+                <Label
+                Text="Pasword Entry flashes on iOS emulator (11123)"
+                FontSize="18"
+                HorizontalTextAlignment="Center" />
+
+                <Entry IsPassword="True" BackgroundColor="LightCyan" />
+
+                <Label
+                Text="RadioButton IsChecked Binding does not work on iOS nor Windows (11125)"
+                FontSize="18"
+                HorizontalTextAlignment="Center" /> 
+
+                <RadioButton x:Name="RememberMeCheckBox" Content="Remember me" IsChecked="{Binding RememberMe}" HorizontalOptions="Center" >
+                    <RadioButton.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RememberMeLabelCommand}" CommandParameter="{x:Reference RememberMeCheckBox}"/>
+                    </RadioButton.GestureRecognizers>
+                </RadioButton>
+
+                <Image
+                Source="dotnet_bot.png"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
